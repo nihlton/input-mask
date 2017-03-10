@@ -1,21 +1,61 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import InputMask from './input-mask/input-mask'
 import './App.css';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+	
+	constructor(props){
+		super(props)
+		this.phoneMask = new InputMask('(___) ___ - ____', '_')
+		this.ccMask = new InputMask('#### #### #### ####', '#')
+		this.dateMask = new InputMask('XX/XX/XXXX', 'X')
+		this.isbnMask = new InputMask('ISBN ___-_-__-______-_', '_')
+	}
+	
+	render() {
+		return (
+			<div className="App">
+				<header>
+					<h2>Input Masking</h2>
+				</header>
+				<div>
+				
+				<label>
+					<span>phone number</span>
+					<input 
+						type="text" 
+						onKeyDown={this.phoneMask.keyDownHandler}
+						onKeyUp={this.phoneMask.keyUpHandler} />
+				</label>
+					
+				<label>
+					<span>credit card</span>
+					<input 
+						type="text" 
+						onKeyDown={this.ccMask.keyDownHandler}
+						onKeyUp={this.ccMask.keyUpHandler} />
+				</label>
+					
+				<label>
+					<span>date</span>
+					<input 
+						type="text" 
+						onKeyDown={this.dateMask.keyDownHandler}
+						onKeyUp={this.dateMask.keyUpHandler} />
+				</label>
+					
+				<label>
+					<span>ISBN</span>
+					<input 
+						type="text" 
+						onKeyDown={this.isbnMask.keyDownHandler}
+						onKeyUp={this.isbnMask.keyUpHandler} />
+				</label>
+				
+				</div>
+			</div>
+		);
+	}
 }
 
 export default App;
