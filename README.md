@@ -7,7 +7,7 @@ Usage:
 	this.phoneMask = new InputMask('(___) ___ - ____', '_')
 }
 
-```jsx
+```html
 {
 	<label>
 		<span>phone number</span>
