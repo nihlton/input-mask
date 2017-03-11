@@ -24,6 +24,7 @@ class App extends Component {
 					<span>phone number</span>
 					<input 
 						type="text" 
+						placeholder='(___) ___ - ____' 
 						onKeyDown={this.phoneMask.keyDownHandler}
 						onKeyUp={this.phoneMask.keyUpHandler} />
 				</label>
@@ -32,6 +33,7 @@ class App extends Component {
 					<span>credit card</span>
 					<input 
 						type="text" 
+						placeholder='#### #### #### ####' 
 						onKeyDown={this.ccMask.keyDownHandler}
 						onKeyUp={this.ccMask.keyUpHandler} />
 				</label>
@@ -40,6 +42,7 @@ class App extends Component {
 					<span>date</span>
 					<input 
 						type="text" 
+						placeholder='XX/XX/XXXX' 
 						onKeyDown={this.dateMask.keyDownHandler}
 						onKeyUp={this.dateMask.keyUpHandler} />
 				</label>
@@ -48,6 +51,7 @@ class App extends Component {
 					<span>ISBN</span>
 					<input 
 						type="text" 
+						placeholder='ISBN ___-_-__-______-_' 
 						onKeyDown={this.isbnMask.keyDownHandler}
 						onKeyUp={this.isbnMask.keyUpHandler} />
 				</label>
