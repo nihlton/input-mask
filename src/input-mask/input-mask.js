@@ -1,11 +1,11 @@
 export default class InputMask {
 
   constructor (pattern, numberMask) {
-    this.keyDownHandler = this.numbersOnly(pattern, numberMask)
+    this.keyDownHandler = this.filterKeys(pattern, numberMask)
     this.keyUpHandler = this.maskInput(pattern, numberMask)
   }
 
-  numbersOnly = (pattern, numberMask) => {
+  filterKeys = (pattern, numberMask) => {
     return (event) => {
       const isControl = event.ctrlKey || event.metaKey
       const thisInput = event.target
@@ -29,6 +29,19 @@ export default class InputMask {
     return outValue
   }
 
+  getValidCaretPosition = (position, pattern, numberMask)=>{
+    while(pattern.charAt(position) !== numberMask && position < pattern.length ){ position++ }
+    return position
+  }
+  
+  nOnly = ( inputStr ) => {
+    return inputStr.replace(/\D/g, '')
+  }
+  
+  pOnly = ( inputStr ) => {
+    return inputStr.replace(/[0-9]/g, '')
+  }
+  
   maskInput = (pattern, numberMask) => {
     return (event) => {
       const thisInput = event.target
@@ -41,13 +54,15 @@ export default class InputMask {
       const matchesPattern = (thisInput.value.toString()).replace(/[0-9]/g, numberMask)
       if( matchesPattern === pattern.substr(0, matchesPattern.length)){ return }
 
-      let inValue = thisInput.value.replace(/\D/g, '').split('')
-      let valueChange
+      let inValue = this.nOnly(thisInput.value).split('')
+      let numbersAdded
+      let decorationAdded
       let outLength = Math.min(numbersInPattern, inValue.length)
       let outValue = InputMask.applyMask(inValue, patternAssets, outLength)
 
-      valueChange = thisInput.value.length - outValue.length
-
+      numbersAdded = this.nOnly(outValue).length - this.nOnly(thisInput.value).length
+      decorationAdded = this.pOnly(outValue.substr(0,caretStart+numbersAdded)).length - this.pOnly(thisInput.value.substr(0,caretStart+numbersAdded)).length
+      
       // user deletes decorative text
       // delete the nearest number instead
       if (
@@ -61,20 +76,17 @@ export default class InputMask {
         let newCaretPos = InputMask.applyMask(firstHalf.split(''), patternAssets, Math.min(numbersInPattern, firstHalf.length)).length
         inValue = (firstHalf + lastHalf).split('')
         outLength = Math.min(numbersInPattern, inValue.length)
+        
+        thisInput.value = InputMask.applyMask(inValue, patternAssets, outLength)
 
-        valueChange = 0
-        outValue = InputMask.applyMask(inValue, patternAssets, outLength)
-
-        thisInput.value = outValue
-
-        thisInput.selectionStart = newCaretPos
-        thisInput.selectionEnd = newCaretPos
+        thisInput.selectionStart = this.getValidCaretPosition(newCaretPos, pattern, numberMask)
+        thisInput.selectionEnd = this.getValidCaretPosition(newCaretPos, pattern, numberMask)
         return
       }
 
       thisInput.value = outValue
-      thisInput.selectionStart = caretStart - valueChange
-      thisInput.selectionEnd = caretEnd - valueChange
+      thisInput.selectionStart = this.getValidCaretPosition(caretStart + numbersAdded, pattern, numberMask) + decorationAdded
+      thisInput.selectionEnd = this.getValidCaretPosition(caretStart + numbersAdded, pattern, numberMask) + decorationAdded
       return
     }
   }
