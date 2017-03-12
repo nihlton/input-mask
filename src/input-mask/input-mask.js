@@ -1,11 +1,11 @@
 export default class InputMask {
 
   constructor (pattern, numberMask) {
-    this.keyDownHandler = this.numbersOnly(pattern)
+    this.keyDownHandler = this.numbersOnly(pattern, numberMask)
     this.keyUpHandler = this.maskInput(pattern, numberMask)
   }
 
-  numbersOnly = (pattern) => {
+  numbersOnly = (pattern, numberMask) => {
     return (event) => {
       const isControl = event.ctrlKey || event.metaKey
       const thisInput = event.target
@@ -13,7 +13,7 @@ export default class InputMask {
       const hasSelection = thisInput.selectionStart !== thisInput.selectionEnd
       const isNotNumberKey = !parseInt(event.key, 10) && isInputKey && event.key !== '0'
       const patternComplete = !hasSelection && thisInput.value.length === pattern.length && isInputKey
-      const matchesPattern = event.key === pattern.charAt(thisInput.selectionStart)
+      const matchesPattern = event.key === pattern.charAt(thisInput.selectionStart) && event.key !== numberMask
 
       if ( !matchesPattern && !isControl && (isNotNumberKey || patternComplete)) {
         event.preventDefault()
