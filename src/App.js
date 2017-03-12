@@ -9,7 +9,7 @@ class App extends Component {
 		this.phoneMask = new InputMask('(___) ___ - ____', '_')
 		this.ccMask = new InputMask('#### #### #### ####', '#')
 		this.dateMask = new InputMask('XX/XX/XXXX', 'X')
-		this.isbnMask = new InputMask('ISBN ___---_--__-______-_', '_')
+		this.isbnMask = new InputMask('ISBN ___-_-__-______-_', '_')
 	}
 	
 	render() {
