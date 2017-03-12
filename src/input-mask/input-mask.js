@@ -63,8 +63,6 @@ export default class InputMask {
       numbersAdded = this.nOnly(outValue).length - this.nOnly(thisInput.value).length
       decorationAdded = this.pOnly(outValue.substr(0,caretStart+numbersAdded)).length - this.pOnly(thisInput.value.substr(0,caretStart+numbersAdded)).length
       
-      console.log(decorationAdded)
-      
       // user deletes decorative text
       // delete the nearest number instead
       if (
