@@ -67,7 +67,7 @@ export default class InputMask {
       // delete the nearest number instead
       if (
         caretEnd !== thisInput.value.length &&
-        event.key === 'Backspace' &&
+        (event.key === 'Backspace' || event.key === 'Unidentified')&&
         thisInput.value.length !== outValue.length &&
         thisInput.value.replace(/\D/g, '') === outValue.replace(/\D/g, '')
       ) {
