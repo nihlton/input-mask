@@ -1,3 +1,5 @@
+TODO:  convert to hook!
+
 demo: http://gregtaff.com/misc/input-mask/
 
 save input-mask.js to your project and then import it when you need it.
